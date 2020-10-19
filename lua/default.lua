@@ -62,10 +62,38 @@ local function InputHandler(event)
 		MESSAGEMAN:Broadcast("ButtonPress",{button=event.DeviceInput.button})
 	end
 end
+
+--SCREENMAN:SystemMessage(SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetNumChildren())
+if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(2):settext("TECH DEMO")
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(3):settext("Contributed by PCBoyGames")
+end
+SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetChildAt(2):settext("TECH DEMO")
+SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetChildAt(3):settext("Contributed by PCBoyGames")
+
 local t = Def.ActorFrame{
 	OnCommand = function(self)
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 		self:playcommand("Update")
+		SCREENMAN:GetTopScreen():GetChild('Underlay'):visible(false)
+		SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(1):visible(false)
+	end,
+	InitCommand = function(self)
+		self:queuecommand("CheckForGameplay")
+	end,
+	CheckForGameplayCommand = function(self)
+		if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
+			if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
+				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):x(SCREEN_CENTER_X+500)
+				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(1):GetChildAt(3):settext("Continue")
+				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(2):GetChildAt(3):settext("Generate New")
+				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(3):GetChildAt(3):settext("Exit Demo")
+			end
+			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):x(SCREEN_CENTER_X-500)
+			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(1):GetChildAt(3):settext("Continue")
+			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(2):GetChildAt(3):settext("Generate New")
+			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(3):GetChildAt(3):settext("Exit Demo")
+		end
 	end,
 	ButtonPressMessageCommand = function(self,param)
 		if param.button == "DeviceButton_q" then
@@ -311,8 +339,6 @@ local t = Def.ActorFrame{
 		if GAMESTATE:GetSongBeat() >= 0 and not didwehide then			
 			onplayers[1] = SCREENMAN:GetTopScreen():GetChild('PlayerP1')
 			onplayers[2] = SCREENMAN:GetTopScreen():GetChild('PlayerP2')
-			SCREENMAN:GetTopScreen():GetChild('Overlay'):visible(false)
-			SCREENMAN:GetTopScreen():GetChild('Underlay'):visible(false)
 			if GAMESTATE:IsPlayerEnabled(0) then
 				if SCREENMAN:GetTopScreen():GetChild('ScoreP1') then SCREENMAN:GetTopScreen():GetChild('ScoreP1'):visible(false) end
 				if SCREENMAN:GetTopScreen():GetChild('LifeP1') then SCREENMAN:GetTopScreen():GetChild('LifeP1'):visible(false) end
@@ -367,6 +393,7 @@ local t = Def.ActorFrame{
 						end
 						if math.mod((2*speedmult)*(GAMESTATE:GetSongBeat()-lastpress),64) > 32 then
 							poptions[i]:Reverse(0.5,999)
+							poptions[i]:NotePath(0,999)
 						end
 					end
 				end
@@ -571,7 +598,7 @@ t[#t+1] = Def.BitmapText{
 t[#t+1] = Def.BitmapText{
 	Font = "_consolas 24px.ini",
 	OnCommand = function(self)
-		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.1")
+		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W1")
 	end
 }
 t[#t+1] = Def.Quad{
