@@ -1,3 +1,15 @@
+local quips = {
+	"An official Outfox tech demo!",
+	"No squirrels were harmed in the making of this product.",
+	"SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN",
+	"Just for me doing all of this, is Lua really that powerful?",
+	"RANDOMLY GENERATED SUBTITLE",
+	"Yes, a tech demo that breaks boundaries that shouldn't be possible!",
+	"A customizable hypnotic experience!",
+	"Have you seen the top corners yet?",
+	"Beware of possible flashing lights!",
+	"私はあなたがこれが何であると思うかは気にしません。"
+}
 local schemecons = math.random(0,4)/4
 local schemechoose = math.random(1,3)
 local colcol = {
@@ -51,6 +63,7 @@ local animoffset4 = math.random(-10,10)/20
 local vertcomp = math.random(0,1)
 local lastpress = 0
 local xoffset = 0
+local resetval = math.random(1,#colcol)
 if math.random(1,10) == 1 then
 	xoffset = math.random(-50,50)
 end
@@ -62,21 +75,32 @@ local function InputHandler(event)
 		MESSAGEMAN:Broadcast("ButtonPress",{button=event.DeviceInput.button})
 	end
 end
-
---SCREENMAN:SystemMessage(SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetNumChildren())
 if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
 	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(2):settext("TECH DEMO")
 	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(3):settext("Contributed by PCBoyGames")
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(6):GetChildAt(1):halign(0.5):valign(0.5):xy(-640,-240):zoom(2):wag():settext("CURRENTLY GENERATING...")
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(6):GetChildAt(2):halign(0.5):valign(0.5):xy(-640,200):settext(quips[math.random(1,#quips)]):sleep(2):decelerate(1):y(-100)
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(6):GetChildAt(3):visible(false)
+else
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(1):halign(0.5):valign(0.5):xy(-640,-240):zoom(2):wag():settext("CURRENTLY GENERATING...")
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(2):halign(0.5):valign(0.5):xy(-640,200):settext("How did you know I've been redesigning this?"):sleep(2):decelerate(1):y(-100)
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(3):visible(false)
 end
+SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(2):diffusealpha(0):sleep(1):diffusealpha(1):y(-10):accelerate(1):y(SCREEN_TOP):sleep(2):decelerate(1):y(-10):sleep(0):diffusealpha(0)
 SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetChildAt(2):settext("TECH DEMO")
 SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(4):GetChildAt(3):settext("Contributed by PCBoyGames")
-
+SCREENMAN:GetTopScreen():y(2*SCREEN_HEIGHT):decelerate(0.6):y(0):sleep(5):decelerate(0.5):y(SCREEN_HEIGHT):sleep(1):y(-1*SCREEN_HEIGHT):accelerate(0.5):y(0)
 local t = Def.ActorFrame{
 	OnCommand = function(self)
 		SCREENMAN:GetTopScreen():AddInputCallback(InputHandler)
 		self:playcommand("Update")
 		SCREENMAN:GetTopScreen():GetChild('Underlay'):visible(false)
 		SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(1):visible(false)
+		if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
+			SCREENMAN:GetTopScreen():GetChildAt(34):GetChildAt(1):GetChildAt(2):diffuse(color(""..colcol[resetval][1]..","..colcol[resetval][2]..","..colcol[resetval][3]..",1")):decelerate(1):diffuse(Color.Black):decelerate(1)
+		else
+			SCREENMAN:GetTopScreen():GetChildAt(27):GetChildAt(1):GetChildAt(2):diffuse(color(""..colcol[resetval][1]..","..colcol[resetval][2]..","..colcol[resetval][3]..",1")):decelerate(1):diffuse(Color.Black):decelerate(1)
+		end
 	end,
 	InitCommand = function(self)
 		self:queuecommand("CheckForGameplay")
@@ -598,7 +622,7 @@ t[#t+1] = Def.BitmapText{
 t[#t+1] = Def.BitmapText{
 	Font = "_consolas 24px.ini",
 	OnCommand = function(self)
-		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W1")
+		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W2")
 	end
 }
 t[#t+1] = Def.Quad{
