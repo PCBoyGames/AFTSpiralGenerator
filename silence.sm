@@ -1,5 +1,5 @@
 #TITLE:AFT Spiral Generator;
-#SUBTITLE:Alpha 2;
+#SUBTITLE:Alpha 2-W3-DEV;
 #ARTIST:Silence;
 #TITLETRANSLIT:;
 #SUBTITLETRANSLIT:;
@@ -18,7 +18,7 @@
 #STOPS:;
 #BGCHANGES:;
 #FGCHANGES:0.000=lua=1.000=0=0=1;
-//--------------- dance-single -  ----------------
+//--------------- dance-single - TECH DEMO ----------------
 #NOTES:
      dance-single:
      TECH DEMO:

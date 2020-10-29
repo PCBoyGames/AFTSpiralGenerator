@@ -1,14 +1,18 @@
 local quips = {
-	"An official Outfox tech demo!",
-	"No squirrels were harmed in the making of this product.",
-	"SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN",
-	"Just for me doing all of this, is Lua really that powerful?",
-	"RANDOMLY GENERATED SUBTITLE",
-	"Yes, a tech demo that breaks boundaries that shouldn't be possible!",
-	"A customizable hypnotic experience!",
-	"Have you seen the top corners yet?",
-	"Beware of possible flashing lights!",
-	"私はあなたがこれが何であると思うかは気にしません。"
+	"An official Outfox tech demo!", --PCBoyGames
+	"No squirrels were harmed in the making of this product.", --PCBoyGames
+	"SPEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEN", --PCBoyGames
+	"Just for me doing all of this, is Lua really that powerful?", --PCBoyGames
+	"RANDOMLY GENERATED SUBTITLE", --PCBoyGames, inspired by TaroNuke
+	"Yes, a tech demo that breaks boundaries that shouldn't be possible!", --PCBoyGames
+	"A customizable hypnotic experience!", --PCBoyGames
+	"Have you seen the top corners yet?", --PCBoyGames
+	"Beware of possible flashing lights!", --PCBoyGames
+	"私はあなたがこれが何であると思うかは気にしません。", --PCBoyGames
+	"I could give less of a care if I'm using GitHub wrong.", --PCBoyGames, inspired by oatmealine and Jousway
+	"Turn SmoothLines off for a more versatile visual experience.", --PCBoyGames
+	"Use Points and Blending is optional! Use it if you want to draw with circles.", --PCBoyGames
+	"I DIDN'T EDIT YOUR THEME, I SWEAR!" --PCBoyGames
 }
 local schemecons = math.random(0,4)/4
 local schemechoose = math.random(1,3)
@@ -33,6 +37,7 @@ local colappend = {
 	"D/F/G",
 	"C/V/B"
 }
+--This was in here for rounding fixes, but now that it's in the Lua lexicon for the latest versions of OF, I'm debating removing it from here.
 function sigFig(num,figures)
 	if num == 0 then return 0 end
     local x=figures - math.ceil(math.log10(math.abs(num)))
@@ -43,7 +48,7 @@ local poptions = {GAMESTATE:GetPlayerState(0):GetPlayerOptions('ModsLevel_Song')
 local onplayers = {nil, nil}
 local rotationz_aft, trails_aft, visible_aft
 local angle = math.random(1,359)
-while angle < 15 or angle > 345 do
+while math.mod(angle,15) == 0 or angle < 15 or angle > 345 do
 	angle = math.random(1,359)
 end
 local speedmult = 1
@@ -83,7 +88,7 @@ if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
 	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(6):GetChildAt(3):visible(false)
 else
 	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(1):halign(0.5):valign(0.5):xy(-640,-240):zoom(2):wag():settext("CURRENTLY GENERATING...")
-	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(2):halign(0.5):valign(0.5):xy(-640,200):settext("How did you know I've been redesigning this?"):sleep(2):decelerate(1):y(-100)
+	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(2):halign(0.5):valign(0.5):xy(-640,200):settext(quips[math.random(1,#quips)]):sleep(2):decelerate(1):y(-100)
 	SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(5):GetChildAt(3):visible(false)
 end
 SCREENMAN:GetTopScreen():GetChild('Underlay'):GetChildAt(2):diffusealpha(0):sleep(1):diffusealpha(1):y(-10):accelerate(1):y(SCREEN_TOP):sleep(2):decelerate(1):y(-10):sleep(0):diffusealpha(0)
@@ -106,20 +111,23 @@ local t = Def.ActorFrame{
 		self:queuecommand("CheckForGameplay")
 	end,
 	CheckForGameplayCommand = function(self)
+	--Note to self: the problem with this is an option I cannot easily check nor control. Wait for the pause menu to be named.
 		if SCREENMAN:GetTopScreen():GetName() == "ScreenGameplay" then
 			if GAMESTATE:IsPlayerEnabled(0) and GAMESTATE:IsPlayerEnabled(1) then
 				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):x(SCREEN_CENTER_X+500)
 				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(1):GetChildAt(3):settext("Continue")
-				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(2):GetChildAt(3):settext("Generate New")
+				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(2):GetChildAt(3):settext("Smart Regenerate")
 				SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(4):GetChildAt(3):GetChildAt(3):settext("Exit Demo")
 			end
 			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):x(SCREEN_CENTER_X-500)
 			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(1):GetChildAt(3):settext("Continue")
-			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(2):GetChildAt(3):settext("Generate New")
+			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(2):GetChildAt(3):settext("Smart Regenerate")
 			SCREENMAN:GetTopScreen():GetChild('Overlay'):GetChildAt(2):GetChildAt(3):GetChildAt(3):GetChildAt(3):settext("Exit Demo")
 		end
 	end,
 	ButtonPressMessageCommand = function(self,param)
+		--I may need this later.
+		--SCREENMAN:SystemMessage(param.button)
 		if param.button == "DeviceButton_q" then
 			angle = angle - 1
 			if angle == -1 then
@@ -356,6 +364,27 @@ local t = Def.ActorFrame{
 			if (animoffset4 > 0 and animoffset4 < 0.01) or (animoffset4 < 0 and animoffset4 > -0.01) then
 				animoffset4 = 0
 			end
+			MESSAGEMAN:Broadcast("ClearBack")
+		elseif param.button == "DeviceButton_right alt" then
+			colcol = {
+				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+			}
+			MESSAGEMAN:Broadcast("ClearBack")
+		elseif param.button == "DeviceButton_right ctrl" then
+			angle = math.random(1,359)
+			speedmult = math.random(5,20)/10
+			widthpathmult = math.random(0,5)
+			animfactor1 = math.random(-20,20)/20
+			animfactor2 = math.random(-20,20)/20
+			animoffset1 = math.random(0,39)/20
+			animoffset2 = math.random(0,39)/20
+			animoffset3 = math.random(-10,10)/20
+			animoffset4 = math.random(-10,10)/20
+			vertcomp = math.random(0,1)
+			xoffset = math.random(-50,50)
 			MESSAGEMAN:Broadcast("ClearBack")
 		end
 	end,
@@ -622,7 +651,19 @@ t[#t+1] = Def.BitmapText{
 t[#t+1] = Def.BitmapText{
 	Font = "_consolas 24px.ini",
 	OnCommand = function(self)
-		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W2")
+		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W3-DEV")
+	end
+}
+t[#t+1] = Def.BitmapText{
+	Font = "_consolas 24px.ini",
+	OnCommand = function(self)
+		self:x(SCREEN_WIDTH-5):y(5):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("(R-ALT) Quick Colors")
+	end
+}
+t[#t+1] = Def.BitmapText{
+	Font = "_consolas 24px.ini",
+	OnCommand = function(self)
+		self:x(SCREEN_WIDTH-5):y(35):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("(R-CTRL) Quick Controls")
 	end
 }
 t[#t+1] = Def.Quad{
