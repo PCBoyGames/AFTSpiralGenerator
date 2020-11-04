@@ -14,6 +14,7 @@ local quips = {
 	"Use Points and Blending is optional! Use it if you want to draw with circles.", --PCBoyGames
 	"I DIDN'T EDIT YOUR THEME, I SWEAR!" --PCBoyGames
 }
+local page = 1
 local schemecons = math.random(0,4)/4
 local schemechoose = math.random(1,3)
 local colcol = {
@@ -128,264 +129,272 @@ local t = Def.ActorFrame{
 	ButtonPressMessageCommand = function(self,param)
 		--I may need this later.
 		--SCREENMAN:SystemMessage(param.button)
-		if param.button == "DeviceButton_q" then
-			angle = angle - 1
-			if angle == -1 then
-				angle = 359
+		if page == 1 then
+			if param.button == "DeviceButton_q" then
+				angle = angle - 1
+				if angle == -1 then
+					angle = 359
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_w" then
+				angle = angle + 1
+				angle = math.mod(angle,360)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_a" then
+				speedmult = speedmult - 0.1
+				if speedmult <= 0.1 then
+					speedmult = 0.1
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_s" then
+				speedmult = speedmult + 0.1
+				if speedmult <= 0.1 then
+					speedmult = 0.1
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_z" then
+				widthpathmult = widthpathmult - 1
+				if (widthpathmult > 0 and widthpathmult < 0.01) or (widthpathmult < 0 and widthpathmult > -0.01) then
+					widthpathmult = 0
+				end
+				if widthpathmult < 0.1 and widthpathmult > 0 then
+					widthpathmult = 0.1
+				end
+				if widthpathmult > -0.1 and widthpathmult < 0 then
+					widthpathmult = -0.1
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_x" then
+				widthpathmult = widthpathmult + 1
+				if (widthpathmult > 0 and widthpathmult < 0.01) or (widthpathmult < 0 and widthpathmult > -0.01) then
+					widthpathmult = 0
+				end
+				if widthpathmult < 0.1 and widthpathmult > 0 then
+					widthpathmult = 0.1
+				end
+				if widthpathmult > -0.1 and widthpathmult < 0 then
+					widthpathmult = -0.1
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_3" then
+				colcol[1][1] = colcol[1][1]+0.25
+				if colcol[1][1] >= 1.25 then
+					colcol[1][1] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_4" then
+				colcol[1][2] = colcol[1][2]+0.25
+				if colcol[1][2] >= 1.25 then
+					colcol[1][2] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_5" then
+				colcol[1][3] = colcol[1][3]+0.25
+				if colcol[1][3] >= 1.25 then
+					colcol[1][3] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_e" then
+				colcol[2][1] = colcol[2][1]+0.25
+				if colcol[2][1] >= 1.25 then
+					colcol[2][1] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_r" then
+				colcol[2][2] = colcol[2][2]+0.25
+				if colcol[2][2] >= 1.25 then
+					colcol[2][2] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_t" then
+				colcol[2][3] = colcol[2][3]+0.25
+				if colcol[2][3] >= 1.25 then
+					colcol[2][3] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_d" then
+				colcol[3][1] = colcol[3][1]+0.25
+				if colcol[3][1] >= 1.25 then
+					colcol[3][1] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_f" then
+				colcol[3][2] = colcol[3][2]+0.25
+				if colcol[3][2] >= 1.25 then
+					colcol[3][2] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_g" then
+				colcol[3][3] = colcol[3][3]+0.25
+				if colcol[3][3] >= 1.25 then
+					colcol[3][3] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_c" then
+				colcol[4][1] = colcol[4][1]+0.25
+				if colcol[4][1] >= 1.25 then
+					colcol[4][1] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_v" then
+				colcol[4][2] = colcol[4][2]+0.25
+				if colcol[4][2] >= 1.25 then
+					colcol[4][2] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_b" then
+				colcol[4][3] = colcol[4][3]+0.25
+				if colcol[4][3] >= 1.25 then
+					colcol[4][3] = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_7" then
+				animfactor1 = animfactor1 - 0.05
+				if (animfactor1 > 0 and animfactor1 < 0.01) or (animfactor1 < 0 and animfactor1 > -0.01) then
+					animfactor1 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_8" then
+				animfactor1 = animfactor1 + 0.05
+				if (animfactor1 > 0 and animfactor1 < 0.01) or (animfactor1 < 0 and animfactor1 > -0.01) then
+					animfactor1 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_9" then
+				animfactor2 = animfactor2 - 0.05
+				if (animfactor2 > 0 and animfactor2 < 0.01) or (animfactor2 < 0 and animfactor2 > -0.01) then
+					animfactor2 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_0" then
+				animfactor2 = animfactor2 + 0.05
+				if (animfactor2 > 0 and animfactor2 < 0.01) or (animfactor2 < 0 and animfactor2 > -0.01) then
+					animfactor2 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_6" then
+				if vertcomp == 0 then
+					vertcomp = 1
+				elseif vertcomp == 1 then
+					vertcomp = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_u" then
+				animoffset1 = animoffset1 - 0.05
+				if animoffset1 > 1.99 then
+					animoffset1 = 0
+				end
+				if animoffset1 < 0 then
+					animoffset1 = 1.95
+				end
+				if (animoffset1 > 0 and animoffset1 < 0.01) or (animoffset1 < 0 and animoffset1 > -0.01) then
+					animoffset1 = 0
+				end
+				animoffset1 = sigFig(animoffset1,3)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_i" then
+				animoffset1 = animoffset1 + 0.05
+				if animoffset1 > 1.99 then
+					animoffset1 = 0
+				end
+				if animoffset1 < 0 then
+					animoffset1 = 1.95
+				end
+				if (animoffset1 > 0 and animoffset1 < 0.01) or (animoffset1 < 0 and animoffset1 > -0.01) then
+					animoffset1 = 0
+				end
+				animoffset1 = sigFig(animoffset1,3)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_o" then
+				animoffset2 = animoffset2 - 0.05
+				if animoffset2 > 1.99 then
+					animoffset2 = 0
+				end
+				if animoffset2 < 0 then
+					animoffset2 = 1.95
+				end
+				if (animoffset2 > 0 and animoffset2 < 0.01) or (animoffset2 < 0 and animoffset2 > -0.01) then
+					animoffset2 = 0
+				end
+				animoffset2 = sigFig(animoffset2,3)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_p" then
+				animoffset2 = animoffset2 + 0.05
+				if animoffset2 > 1.99 then
+					animoffset2 = 0
+				end
+				if animoffset2 < 0 then
+					animoffset2 = 1.95
+				end
+				if (animoffset2 > 0 and animoffset2 < 0.01) or (animoffset2 < 0 and animoffset2 > -0.01) then
+					animoffset2 = 0
+				end
+				animoffset2 = sigFig(animoffset2,3)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_1" then
+				xoffset = xoffset - 1
+				if (xoffset > 0 and xoffset < 0.01) or (xoffset < 0 and xoffset > -0.01) then
+					xoffset = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_2" then
+				xoffset = xoffset + 1
+				if (xoffset > 0 and xoffset < 0.01) or (xoffset < 0 and xoffset > -0.01) then
+					xoffset = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_h" then
+				animoffset3 = animoffset3 - 0.05
+				if (animoffset3 > 0 and animoffset3 < 0.01) or (animoffset3 < 0 and animoffset3 > -0.01) then
+					animoffset3 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_j" then
+				animoffset3 = animoffset3 + 0.05
+				if (animoffset3 > 0 and animoffset3 < 0.01) or (animoffset3 < 0 and animoffset3 > -0.01) then
+					animoffset3 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_k" then
+				animoffset4 = animoffset4 - 0.05
+				if (animoffset4 > 0 and animoffset4 < 0.01) or (animoffset4 < 0 and animoffset4 > -0.01) then
+					animoffset4 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_l" then
+				animoffset4 = animoffset4 + 0.05
+				if (animoffset4 > 0 and animoffset4 < 0.01) or (animoffset4 < 0 and animoffset4 > -0.01) then
+					animoffset4 = 0
+				end
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_right alt" then
+				colcol = {
+					{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+					{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+					{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+					{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
+				}
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_right ctrl" then
+				angle = math.random(1,359)
+				speedmult = math.random(5,20)/10
+				widthpathmult = math.random(0,5)
+				animfactor1 = math.random(-20,20)/20
+				animfactor2 = math.random(-20,20)/20
+				animoffset1 = math.random(0,39)/20
+				animoffset2 = math.random(0,39)/20
+				animoffset3 = math.random(-10,10)/20
+				animoffset4 = math.random(-10,10)/20
+				vertcomp = math.random(0,1)
+				xoffset = math.random(-50,50)
+				MESSAGEMAN:Broadcast("ClearBack")
+			elseif param.button == "DeviceButton_right" then
+				page = 2
 			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_w" then
-			angle = angle + 1
-			angle = math.mod(angle,360)
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_a" then
-			speedmult = speedmult - 0.1
-			if speedmult <= 0.1 then
-				speedmult = 0.1
+		elseif page == 2 then
+			if param.button == "DeviceButton_left" then
+				page = 1
 			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_s" then
-			speedmult = speedmult + 0.1
-			if speedmult <= 0.1 then
-				speedmult = 0.1
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_z" then
-			widthpathmult = widthpathmult - 1
-			if (widthpathmult > 0 and widthpathmult < 0.01) or (widthpathmult < 0 and widthpathmult > -0.01) then
-				widthpathmult = 0
-			end
-			if widthpathmult < 0.1 and widthpathmult > 0 then
-				widthpathmult = 0.1
-			end
-			if widthpathmult > -0.1 and widthpathmult < 0 then
-				widthpathmult = -0.1
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_x" then
-			widthpathmult = widthpathmult + 1
-			if (widthpathmult > 0 and widthpathmult < 0.01) or (widthpathmult < 0 and widthpathmult > -0.01) then
-				widthpathmult = 0
-			end
-			if widthpathmult < 0.1 and widthpathmult > 0 then
-				widthpathmult = 0.1
-			end
-			if widthpathmult > -0.1 and widthpathmult < 0 then
-				widthpathmult = -0.1
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_3" then
-			colcol[1][1] = colcol[1][1]+0.25
-			if colcol[1][1] >= 1.25 then
-				colcol[1][1] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_4" then
-			colcol[1][2] = colcol[1][2]+0.25
-			if colcol[1][2] >= 1.25 then
-				colcol[1][2] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_5" then
-			colcol[1][3] = colcol[1][3]+0.25
-			if colcol[1][3] >= 1.25 then
-				colcol[1][3] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_e" then
-			colcol[2][1] = colcol[2][1]+0.25
-			if colcol[2][1] >= 1.25 then
-				colcol[2][1] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_r" then
-			colcol[2][2] = colcol[2][2]+0.25
-			if colcol[2][2] >= 1.25 then
-				colcol[2][2] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_t" then
-			colcol[2][3] = colcol[2][3]+0.25
-			if colcol[2][3] >= 1.25 then
-				colcol[2][3] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_d" then
-			colcol[3][1] = colcol[3][1]+0.25
-			if colcol[3][1] >= 1.25 then
-				colcol[3][1] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_f" then
-			colcol[3][2] = colcol[3][2]+0.25
-			if colcol[3][2] >= 1.25 then
-				colcol[3][2] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_g" then
-			colcol[3][3] = colcol[3][3]+0.25
-			if colcol[3][3] >= 1.25 then
-				colcol[3][3] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_c" then
-			colcol[4][1] = colcol[4][1]+0.25
-			if colcol[4][1] >= 1.25 then
-				colcol[4][1] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_v" then
-			colcol[4][2] = colcol[4][2]+0.25
-			if colcol[4][2] >= 1.25 then
-				colcol[4][2] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_b" then
-			colcol[4][3] = colcol[4][3]+0.25
-			if colcol[4][3] >= 1.25 then
-				colcol[4][3] = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_7" then
-			animfactor1 = animfactor1 - 0.05
-			if (animfactor1 > 0 and animfactor1 < 0.01) or (animfactor1 < 0 and animfactor1 > -0.01) then
-				animfactor1 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_8" then
-			animfactor1 = animfactor1 + 0.05
-			if (animfactor1 > 0 and animfactor1 < 0.01) or (animfactor1 < 0 and animfactor1 > -0.01) then
-				animfactor1 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_9" then
-			animfactor2 = animfactor2 - 0.05
-			if (animfactor2 > 0 and animfactor2 < 0.01) or (animfactor2 < 0 and animfactor2 > -0.01) then
-				animfactor2 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_0" then
-			animfactor2 = animfactor2 + 0.05
-			if (animfactor2 > 0 and animfactor2 < 0.01) or (animfactor2 < 0 and animfactor2 > -0.01) then
-				animfactor2 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_6" then
-			if vertcomp == 0 then
-				vertcomp = 1
-			elseif vertcomp == 1 then
-				vertcomp = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_u" then
-			animoffset1 = animoffset1 - 0.05
-			if animoffset1 > 1.99 then
-				animoffset1 = 0
-			end
-			if animoffset1 < 0 then
-				animoffset1 = 1.95
-			end
-			if (animoffset1 > 0 and animoffset1 < 0.01) or (animoffset1 < 0 and animoffset1 > -0.01) then
-				animoffset1 = 0
-			end
-			animoffset1 = sigFig(animoffset1,3)
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_i" then
-			animoffset1 = animoffset1 + 0.05
-			if animoffset1 > 1.99 then
-				animoffset1 = 0
-			end
-			if animoffset1 < 0 then
-				animoffset1 = 1.95
-			end
-			if (animoffset1 > 0 and animoffset1 < 0.01) or (animoffset1 < 0 and animoffset1 > -0.01) then
-				animoffset1 = 0
-			end
-			animoffset1 = sigFig(animoffset1,3)
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_o" then
-			animoffset2 = animoffset2 - 0.05
-			if animoffset2 > 1.99 then
-				animoffset2 = 0
-			end
-			if animoffset2 < 0 then
-				animoffset2 = 1.95
-			end
-			if (animoffset2 > 0 and animoffset2 < 0.01) or (animoffset2 < 0 and animoffset2 > -0.01) then
-				animoffset2 = 0
-			end
-			animoffset2 = sigFig(animoffset2,3)
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_p" then
-			animoffset2 = animoffset2 + 0.05
-			if animoffset2 > 1.99 then
-				animoffset2 = 0
-			end
-			if animoffset2 < 0 then
-				animoffset2 = 1.95
-			end
-			if (animoffset2 > 0 and animoffset2 < 0.01) or (animoffset2 < 0 and animoffset2 > -0.01) then
-				animoffset2 = 0
-			end
-			animoffset2 = sigFig(animoffset2,3)
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_1" then
-			xoffset = xoffset - 1
-			if (xoffset > 0 and xoffset < 0.01) or (xoffset < 0 and xoffset > -0.01) then
-				xoffset = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_2" then
-			xoffset = xoffset + 1
-			if (xoffset > 0 and xoffset < 0.01) or (xoffset < 0 and xoffset > -0.01) then
-				xoffset = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_h" then
-			animoffset3 = animoffset3 - 0.05
-			if (animoffset3 > 0 and animoffset3 < 0.01) or (animoffset3 < 0 and animoffset3 > -0.01) then
-				animoffset3 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_j" then
-			animoffset3 = animoffset3 + 0.05
-			if (animoffset3 > 0 and animoffset3 < 0.01) or (animoffset3 < 0 and animoffset3 > -0.01) then
-				animoffset3 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_k" then
-			animoffset4 = animoffset4 - 0.05
-			if (animoffset4 > 0 and animoffset4 < 0.01) or (animoffset4 < 0 and animoffset4 > -0.01) then
-				animoffset4 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_l" then
-			animoffset4 = animoffset4 + 0.05
-			if (animoffset4 > 0 and animoffset4 < 0.01) or (animoffset4 < 0 and animoffset4 > -0.01) then
-				animoffset4 = 0
-			end
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_right alt" then
-			colcol = {
-				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
-				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
-				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
-				{math.random(0,4)/4,math.random(0,4)/4,math.random(0,4)/4},
-			}
-			MESSAGEMAN:Broadcast("ClearBack")
-		elseif param.button == "DeviceButton_right ctrl" then
-			angle = math.random(1,359)
-			speedmult = math.random(5,20)/10
-			widthpathmult = math.random(0,5)
-			animfactor1 = math.random(-20,20)/20
-			animfactor2 = math.random(-20,20)/20
-			animoffset1 = math.random(0,39)/20
-			animoffset2 = math.random(0,39)/20
-			animoffset3 = math.random(-10,10)/20
-			animoffset4 = math.random(-10,10)/20
-			vertcomp = math.random(0,1)
-			xoffset = math.random(-50,50)
-			MESSAGEMAN:Broadcast("ClearBack")
 		end
 	end,
 	UpdateCommand = function(self)
@@ -560,7 +569,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(5):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateText")
 	end,
 	UpdateTextCommand = function(self)
-		self:settext("(1/2) XOffset: "..xoffset.."\n(Q/W) Angle: "..angle.."\n(A/S) Speed: "..speedmult.."\n(Z/X) Width: "..(widthpathmult*100).."%"):sleep(1/60):queuecommand("UpdateText")
+		if page == 1 then
+			self:settext("(1/2) XOffset: "..xoffset.."\n(Q/W) Angle: "..angle.."\n(A/S) Speed: "..speedmult.."\n(Z/X) Width: "..(widthpathmult*100).."%"):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateText")
 	end
 }
 for col=1,#colcol do
@@ -571,7 +585,12 @@ for col=1,#colcol do
 			self:x(5):y(95+(60*col)):halign(0):valign(0):settext("("..colappendtext..") "..col):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateColors")
 		end,
 		UpdateColorsCommand = function(self)
-			self:diffuse(color(""..colcol[col][1]..","..colcol[col][2]..","..colcol[col][3]..",1")):sleep(1/60):queuecommand("UpdateColors")
+			if page == 1 then
+				self:diffuse(color(""..colcol[col][1]..","..colcol[col][2]..","..colcol[col][3]..",1")):diffusealpha(1)
+			else
+				self:diffusealpha(0)
+			end
+			self:sleep(1/60):queuecommand("UpdateColors")
 		end
 	}
 	t[#t+1] = Def.BitmapText{
@@ -580,7 +599,12 @@ for col=1,#colcol do
 			self:x(5):y(65+(60*col)):halign(0):valign(0):settext(colappendtext.." "..col):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateColors")
 		end,
 		UpdateColorsCommand = function(self)
-			self:settext((colcol[col][1]*4)..","..(colcol[col][2]*4)..","..(colcol[col][3]*4)):diffuse(color(""..colcol[col][1]..","..colcol[col][2]..","..colcol[col][3]..",1")):sleep(1/60):queuecommand("UpdateColors")
+			if page == 1 then
+				self:settext((colcol[col][1]*4)..","..(colcol[col][2]*4)..","..(colcol[col][3]*4)):diffuse(color(""..colcol[col][1]..","..colcol[col][2]..","..colcol[col][3]..",1")):diffusealpha(1)
+			else
+				self:diffusealpha(0)
+			end
+			self:sleep(1/60):queuecommand("UpdateColors")
 		end
 	}
 end
@@ -590,8 +614,13 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-210):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateCompression")
 	end,
 	UpdateCompressionCommand = function(self)
-		local iscomptrue = ((vertcomp == 1) and "ON" or "OFF")
-		self:settext("(6) CompNP: "..iscomptrue):sleep(1/60):queuecommand("UpdateCompression")
+		if page == 1 then
+			local iscomptrue = ((vertcomp == 1) and "ON" or "OFF")
+			self:settext("(6) CompNP: "..iscomptrue):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateCompression")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -600,7 +629,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-180):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateFactorA")
 	end,
 	UpdateFactorACommand = function(self)
-		self:settext("(7/8) FlAmt: "..animfactor1):sleep(1/60):queuecommand("UpdateFactorA")
+		if page == 1 then
+			self:settext("(7/8) FlAmt: "..animfactor1):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateFactorA")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -609,7 +643,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-150):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateFactorB")
 	end,
 	UpdateFactorBCommand = function(self)
-		self:settext("(9/0) InAmt: "..animfactor2):sleep(1/60):queuecommand("UpdateFactorB")
+		if page == 1 then
+			self:settext("(9/0) InAmt: "..animfactor2):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateFactorB")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -618,7 +657,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-120):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateOffsetA")
 	end,
 	UpdateOffsetACommand = function(self)
-		self:settext("(U/I) FlTOff: "..animoffset1):sleep(1/60):queuecommand("UpdateOffsetA")
+		if page == 1 then
+			self:settext("(U/I) FlTOff: "..animoffset1):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateOffsetA")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -627,7 +671,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-90):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateOffsetB")
 	end,
 	UpdateOffsetBCommand = function(self)
-		self:settext("(O/P) InTOff: "..animoffset2):sleep(1/60):queuecommand("UpdateOffsetB")
+		if page == 1 then
+			self:settext("(O/P) InTOff: "..animoffset2):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateOffsetB")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -636,7 +685,12 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-60):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateOffsetC")
 	end,
 	UpdateOffsetCCommand = function(self)
-		self:settext("(H/J) FlAOff: "..animoffset3):sleep(1/60):queuecommand("UpdateOffsetC")
+		if page == 1 then
+			self:settext("(H/J) FlAOff: "..animoffset3):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateOffsetC")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -645,13 +699,18 @@ t[#t+1] = Def.BitmapText{
 		self:x(5):y(SCREEN_HEIGHT-30):halign(0):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateOffsetD")
 	end,
 	UpdateOffsetDCommand = function(self)
-		self:settext("(K/L) InAOff: "..animoffset4):sleep(1/60):queuecommand("UpdateOffsetD")
+		if page == 1 then
+			self:settext("(K/L) InAOff: "..animoffset4):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateOffsetD")
 	end
 }
 t[#t+1] = Def.BitmapText{
 	Font = "_consolas 24px.ini",
 	OnCommand = function(self)
-		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W3-DEV")
+		self:x(SCREEN_WIDTH-5):y(SCREEN_HEIGHT-30):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("A.2-W4")
 	end
 }
 t[#t+1] = Def.BitmapText{
@@ -664,6 +723,20 @@ t[#t+1] = Def.BitmapText{
 	Font = "_consolas 24px.ini",
 	OnCommand = function(self)
 		self:x(SCREEN_WIDTH-5):y(35):halign(1):valign(0):shadowlength(1):shadowcolor(color("1,1,1,1")):settext("(R-CTRL) Quick Controls")
+	end
+}
+t[#t+1] = Def.BitmapText{
+	Font = "_consolas 24px.ini",
+	OnCommand = function(self)
+		self:x(5):y(SCREEN_CENTER_Y):halign(0):valign(0.5):shadowlength(1):shadowcolor(color("1,1,1,1")):queuecommand("UpdateWIPFeature")
+	end,
+	UpdateWIPFeatureCommand = function(self)
+		if page == 2 then
+			self:settext("This feature\nis a WIP!\n\nCheck back\nsometime soon!"):diffusealpha(1)
+		else
+			self:diffusealpha(0)
+		end
+		self:sleep(1/60):queuecommand("UpdateWIPFeature")
 	end
 }
 t[#t+1] = Def.Quad{
